@@ -2,6 +2,7 @@ from flask import Flask
 
 from .careerbaba_bp import careerbaba_bp
 # from .extensions import jarvis
+from .extensions import db
 
 __all__ = ['create_app']
 
@@ -37,6 +38,7 @@ def configure_extensions(app):
     """ Configure extensions.
 
     """
+    db.init_app(app)
     # jarvis.init_app(app)
 
 def configure_blueprints(app, blueprints):

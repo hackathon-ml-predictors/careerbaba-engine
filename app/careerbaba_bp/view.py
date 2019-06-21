@@ -2,6 +2,7 @@ import pprint
 import json
 import requests
 import pandas as pd
+import os
 
 from flask import (
     Blueprint, render_template, current_app, request, redirect, session,
@@ -9,7 +10,9 @@ from flask import (
 # from lib.engine import engine
 # from lib.util import hook_on_product
 # from urllib.parse import urlencode
-import os
+from .models import Students
+
+
 
 careerbaba_bp = Blueprint(' ', __name__, url_prefix='/careerbaba')
 
@@ -19,7 +22,13 @@ def index():
     """
 
     """
-    print ('asdasdasd')
+    
+    x = Students(name='jigness')
+    x.save()
+
+    AllStudents = Students.objects.all()
+    return jsonify(AllStudents)
+    # print ('asdasdasd')
     return ('Success',200)
 
 
@@ -36,7 +45,7 @@ def trian():
     if not csv_file:
         return jsonify(errors="No file was uploaded. Please upload a file."), 422
     # sha_signature = sha1(csv_file.read()).hexdigest()
-    csv_file.seek(0)
+    # csv_file.seek(0)
     # merchant_exists = False
     # try:
     #     merchant = Merchant.objects.get(sha_signature=sha_signature)
@@ -50,8 +59,15 @@ def trian():
     #         "activated": False,
     #     }
     #     merchant, errors = MerchantSchema().load(data)
-    data_df = pd.read_csv(csv_file)
-    print(data_df)
+    for row in csv_file:
+        try:
+            x = Students(name=row)
+            x.save()
+        except IndexError as ex:
+            print("ERROR: %s in file %s doesn't contain 5 colums" % (row, i))
+
+    # data_df = pd.read_csv(csv_file)
+    # print(data_df)
     #     merchant.save()
     return ('Success',200)
 
