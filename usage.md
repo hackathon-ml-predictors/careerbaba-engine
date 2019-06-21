@@ -2,6 +2,7 @@
 
 curl -X POST -F "file=@ips.csv"  http://127.0.0.1:5000/careerbaba/trian
 
+curl -X POST -F "file=@ips.csv"  http://127.0.0.1:5000/careerbaba/testtrian
 curl -X POST -F "file=@/path/example.gif" http://127.0.0.1:5000/uploadform.cgi
 
 curl -X POST -F "name=user" -F "password=test" http://127.0.0.1:5000/example.php

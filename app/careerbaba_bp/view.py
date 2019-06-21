@@ -11,7 +11,7 @@ from flask import (
 # from lib.util import hook_on_product
 # from urllib.parse import urlencode
 from .models import Students
-
+from lib.engine import train
 
 
 careerbaba_bp = Blueprint(' ', __name__, url_prefix='/careerbaba')
@@ -78,4 +78,15 @@ def recommandation():
     1. get data post
     2. 
     """
+    return ('Success',200)
+
+
+@careerbaba_bp.route('/testtrian', methods=['POST'])
+def testtrian():
+    csv_file = request.files.get("file")
+    if not csv_file:
+        return jsonify(errors="No file was uploaded. Please upload a file."), 422
+
+    data_df = pd.read_csv(csv_file)
+    train(data_df)
     return ('Success',200)
