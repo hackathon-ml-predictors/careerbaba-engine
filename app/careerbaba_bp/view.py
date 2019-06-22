@@ -3,6 +3,7 @@ import json
 import requests
 import pandas as pd
 import os
+import numpy as np
 
 from flask import (
     Blueprint, render_template, current_app, request, redirect, session,
@@ -78,15 +79,45 @@ def recommandation():
     1. get data post
     2. get_recommanded_job
     """
+    PostData = []
+    jsonPostData = []
+    content = request.get_json(silent=True)
+    last = ''
+    for row in content:
+        # print(row['value'])
+        # data = {row['name']:row['value']}
+        if last != row['name']:
+            PostData.append(row['value'])
+            last = row['name']
 
+    jsonPostData.append(PostData)
+    print(len(PostData))
+    jsonPostData = np.array(jsonPostData)
+    print(jsonPostData)
 
-    jsonPostData = [[76, 87, 60, 84, 89, 73, 62, 88, 69, 7, 1, 1, 2, 5, 0, 1, 0, 6, 1,
-        1, 0, 1, 0, 7, 5, 0, 7, 0, 0, 23, 0, 1, 0, 0, 1, 1, 1, 1]]
+    # return ('Success',200)
+    
 
-    jsonPostData = [[84,72,88,62,66,63,78,94,60,12,2,1,6,6,'yes','no','no','r programming','cloud computing','no','yes','poor','excellent','parallel computing','developer','higherstudies','BPA','no','no','Romance','salary','no','stubborn','Technical','salary','smart worker','no','no'
-]]
+    # jsonPostData = [[76, 87, 60, 84, 89, 73, 62, 88, 69, 7, 1, 1, 2, 5, 0, 1, 0, 6, 1,
+    #     1, 0, 1, 0, 7, 5, 0, 7, 0, 0, 23, 0, 1, 0, 0, 1, 1, 1, 1]]
+
+#     jsonPostData = np.array([[84,72,88,62,66,63,78,94,60,12,2,1,6,6,'yes','no','no','r programming','cloud computing','no','yes','poor','excellent','parallel computing','developer','higherstudies','BPA','no','no','Romance','salary','no','stubborn','Technical','salary','smart worker','no','no'
+# ]])
+    # print(jsonPostData)
+    # return ('Success',200)
+
+    from sklearn.preprocessing import LabelEncoder, OneHotEncoder
+
+    labelencoder = LabelEncoder()
+
+    for i in range(14,38):
+        jsonPostData[:,i] = labelencoder.fit_transform(jsonPostData[:,i])
+
+    print((jsonPostData))
     job = get_recommanded_job(jsonPostData)
+    
     return (str(job),200)
+    # return ('Success',200)
 
 
 @careerbaba_bp.route('/testtrian', methods=['POST'])

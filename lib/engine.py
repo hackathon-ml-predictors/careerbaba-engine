@@ -77,6 +77,9 @@ def train(dataset):
        'worked in teams ever?', 'Introvert'])   
     X1.head()
 
+    print('actual data')
+    print(X1.head(1))  
+
     le = LabelEncoder()
     label_in_string = label
 
