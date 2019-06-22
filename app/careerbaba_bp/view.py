@@ -11,7 +11,7 @@ from flask import (
 # from lib.util import hook_on_product
 # from urllib.parse import urlencode
 from .models import Students
-from lib.engine import train
+from lib.engine import train, get_recommanded_job
 
 
 careerbaba_bp = Blueprint(' ', __name__, url_prefix='/careerbaba')
@@ -72,13 +72,21 @@ def trian():
     return ('Success',200)
 
 
-@careerbaba_bp.route('/recommandation', methods=['POST'])
+@careerbaba_bp.route('/recommandation', methods=['POST','GET'])
 def recommandation():
     """
     1. get data post
-    2. 
+    2. get_recommanded_job
     """
-    return ('Success',200)
+
+
+    jsonPostData = [[76, 87, 60, 84, 89, 73, 62, 88, 69, 7, 1, 1, 2, 5, 0, 1, 0, 6, 1,
+        1, 0, 1, 0, 7, 5, 0, 7, 0, 0, 23, 0, 1, 0, 0, 1, 1, 1, 1]]
+
+#     jsonPostData = [[84,72,88,62,66,63,78,94,60,12,2,1,6,6,'yes','no','no','r programming','cloud computing','no','yes','poor','excellent','parallel computing','developer','higherstudies','BPA','no','no','Romance','salary','no','stubborn','Technical','salary','smart worker','no','no'
+# ]]
+    job = get_recommanded_job(jsonPostData)
+    return (str(job),200)
 
 
 @careerbaba_bp.route('/testtrian', methods=['POST'])
