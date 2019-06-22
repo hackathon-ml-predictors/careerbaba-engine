@@ -83,8 +83,8 @@ def recommandation():
     jsonPostData = [[76, 87, 60, 84, 89, 73, 62, 88, 69, 7, 1, 1, 2, 5, 0, 1, 0, 6, 1,
         1, 0, 1, 0, 7, 5, 0, 7, 0, 0, 23, 0, 1, 0, 0, 1, 1, 1, 1]]
 
-#     jsonPostData = [[84,72,88,62,66,63,78,94,60,12,2,1,6,6,'yes','no','no','r programming','cloud computing','no','yes','poor','excellent','parallel computing','developer','higherstudies','BPA','no','no','Romance','salary','no','stubborn','Technical','salary','smart worker','no','no'
-# ]]
+    jsonPostData = [[84,72,88,62,66,63,78,94,60,12,2,1,6,6,'yes','no','no','r programming','cloud computing','no','yes','poor','excellent','parallel computing','developer','higherstudies','BPA','no','no','Romance','salary','no','stubborn','Technical','salary','smart worker','no','no'
+]]
     job = get_recommanded_job(jsonPostData)
     return (str(job),200)
 
